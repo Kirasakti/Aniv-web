@@ -1,0 +1,201 @@
+```html id="z7k1lx"
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Story</title>
+
+    <style>
+      body {
+        margin: 0;
+        background: black;
+        color: white;
+        font-family: "Segoe UI", sans-serif;
+        overflow: hidden;
+      }
+
+      /* SCENE */
+      .scene {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1.5s ease;
+      }
+
+      .scene.active {
+        opacity: 1;
+      }
+
+      /* IMAGE */
+      .scene img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: zoom 10s ease forwards;
+      }
+
+      @keyframes zoom {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.1);
+        }
+      }
+
+      /* TEXT */
+      .text {
+        position: absolute;
+        bottom: 15%;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 15px;
+        opacity: 0.85;
+      }
+
+      /* START BUTTON */
+      .start {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        color: black;
+        padding: 12px 20px;
+        border-radius: 25px;
+        border: none;
+      }
+
+      /* ROSE */
+      .rose {
+        position: absolute;
+        top: -20px;
+        font-size: 14px;
+        opacity: 0.4;
+        animation: fall linear forwards;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- AUDIO -->
+    <audio id="music">
+      <source src="lagu.mp3" />
+    </audio>
+
+    <button class="start" onclick="start()">Mulai</button>
+
+    <!-- SCENES -->
+
+    <div class="scene" id="s1">
+      <div class="text">
+        <h1>Happy Anniversary</h1>
+        <p>Satu tahun... dan aku masih di sini.</p>
+      </div>
+    </div>
+
+    <div class="scene" id="s2">
+      <img src="foto1.jpeg" />
+      <div class="text">
+        <p>
+          Pertama kali kita foto bareng. Kamu kelihatan gugup... dan itu jujur
+          lucu.
+        </p>
+      </div>
+    </div>
+
+    <div class="scene" id="s3">
+      <img src="foto2.jpeg" />
+      <div class="text">
+        <p>
+          Kita ketawa di hal kecil. Tapi sekarang, itu jadi kenangan yang besar.
+        </p>
+      </div>
+    </div>
+
+    <div class="scene" id="s4">
+      <img src="foto3.jpeg" />
+      <div class="text">
+        <p>
+          Bunga pertama itu... bukan cuma hadiah. Tapi cara aku bilang, aku
+          serius.
+        </p>
+      </div>
+    </div>
+
+    <div class="scene" id="s5">
+      <div class="text">
+        <h1 id="days"></h1>
+        <p>
+          Aku nggak tau masa depan gimana. Tapi untuk sekarang... aku masih
+          milih kamu.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      let scenes = ["s1", "s2", "s3", "s4", "s5"];
+      let index = 0;
+
+      function start() {
+        document.querySelector(".start").style.display = "none";
+        document.getElementById("music").play();
+        showScene();
+      }
+
+      function showScene() {
+        if (index > 0) {
+          document.getElementById(scenes[index - 1]).classList.remove("active");
+        }
+
+        let el = document.getElementById(scenes[index]);
+        el.classList.add("active");
+
+        index++;
+
+        if (index < scenes.length) {
+          setTimeout(showScene, 5000);
+        }
+      }
+
+      // COUNT DAYS
+      let startDate = new Date("2025-04-25");
+      let now = new Date();
+      let days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+      document.getElementById("days").innerText =
+        days + " hari kita berjalan bersama.";
+
+      // ROSE EFFECT
+      setInterval(() => {
+        let r = document.createElement("div");
+        r.innerHTML = "🌹";
+        r.className = "rose";
+        r.style.left = Math.random() * 100 + "vw";
+        r.style.animationDuration = 5 + Math.random() * 3 + "s";
+        document.body.appendChild(r);
+
+        setTimeout(() => r.remove(), 8000);
+      }, 500);
+    </script>
+  </body>
+</html>
+```
